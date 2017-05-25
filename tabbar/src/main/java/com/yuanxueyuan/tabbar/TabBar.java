@@ -3,6 +3,8 @@ package com.yuanxueyuan.tabbar;
 import android.content.Context;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.IdRes;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
@@ -26,44 +28,121 @@ import java.util.List;
 
 public class TabBar extends LinearLayout implements View.OnClickListener, ViewPager.OnPageChangeListener {
 
-    //控件
+    /******************************控件************************/
+    /**
+     * 上下文
+     */
     private Context context;
+
+    /**
+     * fragment管理器
+     */
     private FragmentManager fragmentManager;
+
+    /**
+     * 底层的tabBar的LinearLayout
+     */
     private LinearLayout page1LL, page2LL, page3LL, page4LL, page5LL;
+
+    /**
+     * 底层的tabBar的文字部分
+     */
     private TextView page1Txt, page2Txt, page3Txt, page4Txt, page5Txt;
+
+    /**
+     * 底层的tabBar的图片部分
+     */
     private ImageView page1Img, page2Img, page3Img, page4Img, page5Img;
+
+    /**
+     * 底层的tabBar所对应的viewPager
+     */
     private ViewPager viewPager;
+
+    /**
+     * fragment的adapter
+     */
     private FragmentAdapter fragmentAdapter;
 
 
-    //变量
+    /******************************变量************************/
     /**
      * 数组形式
+     * 展示文字
      */
-    private String[] txts;//展示文字
+    private
+    @StringRes
+    int[] txts;
+
+    /**
+     * 数组形式
+     * 展示不被选中图片
+     */
     private
     @DrawableRes
-    int[] unSelectResId;//展示不被选中图片
+    int[] unSelectResId;
+
+
+    /**
+     * 数组形式
+     * 展示被选中图片
+     */
     private
     @DrawableRes
-    int[] selectResId;//展示被选中图片
+    int[] selectResId;
+
+    /**
+     * 数组形式
+     * fragment
+     */
     private Fragment[] fragments;
+
+
+    /**
+     * 数组形式
+     * 颜色id
+     */
     private
     @ColorRes
-    int[] colorId;//颜色id
+    int[] colorId;
+
+
     /**
      * 集合形式
+     * 展示文字
      */
-    private List<String> txtsList;//展示文字
-    private List<Integer> unSelectResIdList;//展示不被选中图片
-    private List<Integer> selectResIdList;//展示被选中图片
+    private List<String> txtsList;
+
+    /**
+     * 集合形式
+     * 展示不被选中图片
+     */
+    private List<Integer> unSelectResIdList;
+
+    /**
+     * 集合形式
+     * 展示被选中图片
+     */
+    private List<Integer> selectResIdList;
+
+    /**
+     * 集合形式
+     * fragment
+     */
     private List<BaseFragment> fragmentList;
-    private List<Integer> colorIdList;//颜色id
 
-    private int size;//各个控件的大小
+    /**
+     * 集合形式
+     * 颜色值
+     */
+    private List<Integer> colorIdList;
 
-    //组件id
-    private int [] pageLLId = {R.id.ll_page1, R.id.ll_page2, R.id.ll_page3, R.id.ll_page4, R.id.ll_page5};
+
+    /**
+     * 集合形式
+     * 组件id
+     */
+    private int[] pageLLId = {R.id.ll_page1, R.id.ll_page2, R.id.ll_page3, R.id.ll_page4, R.id.ll_page5};
 
 
     public TabBar(Context context, AttributeSet attrs) {
@@ -74,9 +153,9 @@ public class TabBar extends LinearLayout implements View.OnClickListener, ViewPa
     }
 
 
-
-
     /**
+     * @param view
+     *         视图
      * @author yuanxueyuan
      * @Title: initView
      * @Description: 初始化布局
@@ -112,27 +191,37 @@ public class TabBar extends LinearLayout implements View.OnClickListener, ViewPa
 
     }
 
-    public void setTabBar(){
-        //设置tabBar
+    /**
+     * @author yuanxueyuan
+     * @Title: setTabBar
+     * @Description: 设置tabBar
+     * @date 2017/5/25 10:01
+     */
+    public void setTabBar() {
+
         if (txts != null && txts.length > 0) {
 
-        } else if (txtsList != null && txtsList.size() > 0){
+        } else if (txtsList != null && txtsList.size() > 0) {
             setTabBar(this.txtsList, this.unSelectResIdList, this.selectResIdList, this.fragmentList);
         }
     }
 
     /**
+     * @param txts
+     *         文字的数组
      * @author yuanxueyuan
      * @Title: initTxt
      * @Description: 初始化文字
      * @date 2017/5/18 21:17
      */
-    public void initTxt(String[] txts) {
+    public void initTxt(int[] txts) {
         this.txts = txts;
     }
 
 
     /**
+     * @param txtsList
+     *         文字的集合
      * @author yuanxueyuan
      * @Title: initTxt
      * @Description: 初始化文字
@@ -143,6 +232,8 @@ public class TabBar extends LinearLayout implements View.OnClickListener, ViewPa
     }
 
     /**
+     * @param unSelectResId
+     *         未选中图片id的数组
      * @author yuanxueyuan
      * @Title: initUnSelectResId
      * @Description: 初始化未被选中的图片资源
@@ -153,6 +244,8 @@ public class TabBar extends LinearLayout implements View.OnClickListener, ViewPa
     }
 
     /**
+     * @param unSelectResIdList
+     *         未选中图片id的集合
      * @author yuanxueyuan
      * @Title: initUnSelectResId
      * @Description: 初始化未被选中的图片资源
@@ -163,6 +256,8 @@ public class TabBar extends LinearLayout implements View.OnClickListener, ViewPa
     }
 
     /**
+     * @param selectResId
+     *         选中图片id的数组
      * @author yuanxueyuan
      * @Title: initSelectResId
      * @Description: 初始化被选中的图片资源
@@ -173,6 +268,8 @@ public class TabBar extends LinearLayout implements View.OnClickListener, ViewPa
     }
 
     /**
+     * @param selectResIdList
+     *         选中图片id的集合
      * @author yuanxueyuan
      * @Title: initSelectResId
      * @Description: 初始化被选中的图片资源
@@ -183,6 +280,8 @@ public class TabBar extends LinearLayout implements View.OnClickListener, ViewPa
     }
 
     /**
+     * @param fragmentsList
+     *         fragment的集合
      * @author yuanxueyuan
      * @Title: initSelectResId
      * @Description: 初始化被选中的图片资源
@@ -193,6 +292,8 @@ public class TabBar extends LinearLayout implements View.OnClickListener, ViewPa
     }
 
     /**
+     * @param fragments
+     *         fragment的数组
      * @author yuanxueyuan
      * @Title: initSelectResId
      * @Description: 初始化被选中的图片资源
@@ -210,6 +311,8 @@ public class TabBar extends LinearLayout implements View.OnClickListener, ViewPa
     }
 
     /**
+     * @param colorId
+     *         颜色值的id的数组
      * @author yuanxueyuan
      * @Title: initTxtColor
      * @Description: 初始化颜色值, 第一个颜色表示未选中的颜色值，第二个表示选中的颜色值
@@ -220,6 +323,8 @@ public class TabBar extends LinearLayout implements View.OnClickListener, ViewPa
     }
 
     /**
+     * @param colorId
+     *         颜色值的id的集合
      * @author yuanxueyuan
      * @Title: initTxtColor
      * @Description: 初始化颜色值, 第一个颜色表示未选中的颜色值，第二个表示选中的颜色值
@@ -231,22 +336,24 @@ public class TabBar extends LinearLayout implements View.OnClickListener, ViewPa
 
 
     /**
-    * @author  yuanxueyuan
-    * @Title:  initFragmentManager
-    * @Description: 初始化fragmentManager
-    * @date 2017/5/24 11:39
-    */
-    public void initFragmentManager(FragmentManager fragmentManager){
+     * @param fragmentManager
+     *         fragment的管理器
+     * @author yuanxueyuan
+     * @Title: initFragmentManager
+     * @Description: 初始化fragmentManager
+     * @date 2017/5/24 11:39
+     */
+    public void initFragmentManager(FragmentManager fragmentManager) {
         this.fragmentManager = fragmentManager;
     }
-    
-    /** 
-    * @author  yuanxueyuan
-    * @Title:  setListener
-    * @Description: 设置监听事件
-    * @date 2017/5/24 13:24
-    */
-    private void setListener(){
+
+    /**
+     * @author yuanxueyuan
+     * @Title: setListener
+     * @Description: 设置监听事件
+     * @date 2017/5/24 13:24
+     */
+    private void setListener() {
         page1LL.setOnClickListener(this);
         page2LL.setOnClickListener(this);
         page3LL.setOnClickListener(this);
@@ -256,6 +363,14 @@ public class TabBar extends LinearLayout implements View.OnClickListener, ViewPa
     }
 
     /**
+     * @param txtsLength
+     *         文字集合的个数
+     * @param unSelectResIdLength
+     *         为选中图片id的个数
+     * @param selectResIdLength
+     *         选中图片id的个数
+     * @param fragmentsLength
+     *         fragment个数
      * @author yuanxueyuan
      * @Title: verificationValues
      * @Description: 验证参数的大小是否一致
@@ -266,11 +381,18 @@ public class TabBar extends LinearLayout implements View.OnClickListener, ViewPa
             Toast.makeText(context, R.string.values_un, Toast.LENGTH_SHORT).show();
             return false;
         }
-        size = txtsLength;
         return true;
     }
 
     /**
+     * @param txtsList
+     *         文字集合
+     * @param unSelectResIdList
+     *         为选中图片id集合
+     * @param selectResIdList
+     *         选中图片id的集合
+     * @param fragmentList
+     *         fragment集合
      * @author yuanxueyuan
      * @Title: setTabBar
      * @Description: 设置下方菜单栏的个数
@@ -286,7 +408,7 @@ public class TabBar extends LinearLayout implements View.OnClickListener, ViewPa
         boolean verification = verificationValues(txtsList.size(), unSelectResIdList.size(), selectResIdList.size(), fragmentList.size());
 
         if (verification) {
-            fragmentAdapter = new FragmentAdapter(fragmentManager,fragmentList);
+            fragmentAdapter = new FragmentAdapter(fragmentManager, fragmentList);
             viewPager.setAdapter(fragmentAdapter);
             //关闭预加载，默认一次只加载一个Fragment
             viewPager.setOffscreenPageLimit(3);
@@ -329,7 +451,7 @@ public class TabBar extends LinearLayout implements View.OnClickListener, ViewPa
                     txtsList.set(0, "");
                 }
                 page1Txt.setText(txtsList.get(0));
-                page1Txt.setTextColor(ContextCompat.getColor(context,color));
+                page1Txt.setTextColor(ContextCompat.getColor(context, color));
                 page1Img.setImageResource(unSelectResIdList.get(0));
 
                 //second
@@ -337,7 +459,7 @@ public class TabBar extends LinearLayout implements View.OnClickListener, ViewPa
                     txtsList.set(1, "");
                 }
                 page2Txt.setText(txtsList.get(1));
-                page2Txt.setTextColor(ContextCompat.getColor(context,color));
+                page2Txt.setTextColor(ContextCompat.getColor(context, color));
                 page2Img.setImageResource(unSelectResIdList.get(1));
 
                 //third
@@ -345,7 +467,7 @@ public class TabBar extends LinearLayout implements View.OnClickListener, ViewPa
                     txtsList.set(2, "");
                 }
                 page3Txt.setText(txtsList.get(2));
-                page3Txt.setTextColor(ContextCompat.getColor(context,color));
+                page3Txt.setTextColor(ContextCompat.getColor(context, color));
                 page3Img.setImageResource(unSelectResIdList.get(2));
 
                 //Fourth、Fifth，hidden
@@ -360,7 +482,7 @@ public class TabBar extends LinearLayout implements View.OnClickListener, ViewPa
                     txtsList.set(0, "");
                 }
                 page1Txt.setText(txtsList.get(0));
-                page1Txt.setTextColor(ContextCompat.getColor(context,color));
+                page1Txt.setTextColor(ContextCompat.getColor(context, color));
                 page1Img.setImageResource(unSelectResIdList.get(0));
 
                 //second
@@ -368,7 +490,7 @@ public class TabBar extends LinearLayout implements View.OnClickListener, ViewPa
                     txtsList.set(1, "");
                 }
                 page2Txt.setText(txtsList.get(1));
-                page2Txt.setTextColor(ContextCompat.getColor(context,color));
+                page2Txt.setTextColor(ContextCompat.getColor(context, color));
                 page2Img.setImageResource(unSelectResIdList.get(1));
 
                 //third
@@ -376,7 +498,7 @@ public class TabBar extends LinearLayout implements View.OnClickListener, ViewPa
                     txtsList.set(2, "");
                 }
                 page3Txt.setText(txtsList.get(2));
-                page3Txt.setTextColor(ContextCompat.getColor(context,color));
+                page3Txt.setTextColor(ContextCompat.getColor(context, color));
                 page3Img.setImageResource(unSelectResIdList.get(2));
 
                 //Fourth
@@ -384,7 +506,7 @@ public class TabBar extends LinearLayout implements View.OnClickListener, ViewPa
                     txtsList.set(3, "");
                 }
                 page4Txt.setText(txtsList.get(3));
-                page4Txt.setTextColor(ContextCompat.getColor(context,color));
+                page4Txt.setTextColor(ContextCompat.getColor(context, color));
                 page4Img.setImageResource(unSelectResIdList.get(3));
 
                 //Fifth hidden
@@ -396,7 +518,7 @@ public class TabBar extends LinearLayout implements View.OnClickListener, ViewPa
                     txtsList.set(0, "");
                 }
                 page1Txt.setText(txtsList.get(0));
-                page1Txt.setTextColor(ContextCompat.getColor(context,color));
+                page1Txt.setTextColor(ContextCompat.getColor(context, color));
                 page1Img.setImageResource(unSelectResIdList.get(0));
 
                 //second
@@ -404,7 +526,7 @@ public class TabBar extends LinearLayout implements View.OnClickListener, ViewPa
                     txtsList.set(1, "");
                 }
                 page2Txt.setText(txtsList.get(1));
-                page2Txt.setTextColor(ContextCompat.getColor(context,color));
+                page2Txt.setTextColor(ContextCompat.getColor(context, color));
                 page2Img.setImageResource(unSelectResIdList.get(1));
 
                 //third
@@ -412,7 +534,7 @@ public class TabBar extends LinearLayout implements View.OnClickListener, ViewPa
                     txtsList.set(2, "");
                 }
                 page3Txt.setText(txtsList.get(2));
-                page3Txt.setTextColor(ContextCompat.getColor(context,color));
+                page3Txt.setTextColor(ContextCompat.getColor(context, color));
                 page3Img.setImageResource(unSelectResIdList.get(2));
 
                 //Fourth
@@ -420,7 +542,7 @@ public class TabBar extends LinearLayout implements View.OnClickListener, ViewPa
                     txtsList.set(3, "");
                 }
                 page4Txt.setText(txtsList.get(3));
-                page4Txt.setTextColor(ContextCompat.getColor(context,color));
+                page4Txt.setTextColor(ContextCompat.getColor(context, color));
                 page4Img.setImageResource(unSelectResIdList.get(3));
 
                 //Fifth
@@ -428,7 +550,7 @@ public class TabBar extends LinearLayout implements View.OnClickListener, ViewPa
                     txtsList.set(4, "");
                 }
                 page5Txt.setText(txtsList.get(4));
-                page5Txt.setTextColor(ContextCompat.getColor(context,color));
+                page5Txt.setTextColor(ContextCompat.getColor(context, color));
                 page5Img.setImageResource(unSelectResIdList.get(4));
                 break;
             default:
@@ -450,7 +572,7 @@ public class TabBar extends LinearLayout implements View.OnClickListener, ViewPa
         setDeFaultTabBar(); //先将全部设置默认的tabBar
 
         if (index > txtsList.size()) {
-            Log.e(Constant.ClassName,"index > txtsList.size()");
+            Log.e(Constant.ClassName, "index > txtsList.size()");
             return;
         }
 
@@ -470,23 +592,23 @@ public class TabBar extends LinearLayout implements View.OnClickListener, ViewPa
         switch (index) {
             case Constant.ONE_TAB_HOST:
                 page1Img.setImageResource(selectResIdList.get(0));
-                page1Txt.setTextColor(ContextCompat.getColor(context,color));
+                page1Txt.setTextColor(ContextCompat.getColor(context, color));
                 break;
             case Constant.TWO_TAB_HOST:
                 page2Img.setImageResource(selectResIdList.get(1));
-                page2Txt.setTextColor(ContextCompat.getColor(context,color));
+                page2Txt.setTextColor(ContextCompat.getColor(context, color));
                 break;
             case Constant.THREE_TAB_HOST:
                 page3Img.setImageResource(selectResIdList.get(2));
-                page3Txt.setTextColor(ContextCompat.getColor(context,color));
+                page3Txt.setTextColor(ContextCompat.getColor(context, color));
                 break;
             case Constant.FOUR_TAB_HOST:
                 page4Img.setImageResource(selectResIdList.get(3));
-                page4Txt.setTextColor(ContextCompat.getColor(context,color));
+                page4Txt.setTextColor(ContextCompat.getColor(context, color));
                 break;
             case Constant.FIVE_TAB_HOST:
                 page5Img.setImageResource(selectResIdList.get(4));
-                page5Txt.setTextColor(ContextCompat.getColor(context,color));
+                page5Txt.setTextColor(ContextCompat.getColor(context, color));
                 break;
             default:
                 break;
@@ -494,17 +616,18 @@ public class TabBar extends LinearLayout implements View.OnClickListener, ViewPa
     }
 
     /**
-    * @author  yuanxueyuan
-    * @Title:  onClick
-    * @Description: 点击事件
-    * @date 2017/5/24 14:21
-     * @param
-    */
+     * @param view
+     *         视图
+     * @author yuanxueyuan
+     * @Title: onClick
+     * @Description: 点击事件
+     * @date 2017/5/24 14:21
+     */
     @Override
     public void onClick(View view) {
         int id = view.getId();
         for (int i = 0; i < pageLLId.length; i++) {
-            if (id == pageLLId [i]) {
+            if (id == pageLLId[i]) {
                 setSelectTabBar(i + 1);
                 viewPager.setCurrentItem(i);
             }
@@ -517,11 +640,11 @@ public class TabBar extends LinearLayout implements View.OnClickListener, ViewPa
     }
 
     /**
-    * @author  yuanxueyuan
-    * @Title:  onPageSelected
-    * @Description: 滑动时的监听
-    * @date 2017/5/24 14:22
-    */
+     * @author yuanxueyuan
+     * @Title: onPageSelected
+     * @Description: 滑动时的监听
+     * @date 2017/5/24 14:22
+     */
     @Override
     public void onPageSelected(int position) {
         setSelectTabBar(position + 1);
