@@ -2,11 +2,14 @@ package com.yuanxueyuan.tabbardemo;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.yuanxueyuan.tabbar.BaseFragment;
+
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -67,8 +70,17 @@ public class Fragment1 extends BaseFragment {
 
 
     @Override
-    protected void lazyLoad() {
-
+    protected void onLazyLoadOnce() {
+        super.onLazyLoadOnce();
     }
 
+    @Override
+    protected void onVisibleToUser() {
+        super.onVisibleToUser();
+    }
+
+    @Override
+    protected void onInvisibleToUser() {
+        super.onInvisibleToUser();
+    }
 }

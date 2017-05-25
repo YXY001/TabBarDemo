@@ -2,6 +2,7 @@ package com.yuanxueyuan.tabbardemo;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,9 +66,18 @@ public class Fragment2 extends BaseFragment {
         return inflater.inflate(R.layout.fragment_fragment2, container, false);
     }
 
+    @Override
+    protected void onLazyLoadOnce() {
+        super.onLazyLoadOnce();
+    }
 
     @Override
-    protected void lazyLoad() {
+    protected void onVisibleToUser() {
+        super.onVisibleToUser();
+    }
 
+    @Override
+    protected void onInvisibleToUser() {
+        super.onInvisibleToUser();
     }
 }
