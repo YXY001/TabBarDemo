@@ -3,6 +3,7 @@ package com.yuanxueyuan.tabbardemo;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.yuanxueyuan.tabbar.BaseFragment;
 import com.yuanxueyuan.tabbar.TabBar;
@@ -10,7 +11,7 @@ import com.yuanxueyuan.tabbar.TabBar;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements TabBar.TabBarDelegate{
 
     private TabBar tabBar;
     private List<String> textList;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         initFragmentManager();
         initTextColor();
         tabBar.setTabBar();
+        tabBar.setDelegate(this);
     }
 
 
@@ -81,6 +83,10 @@ public class MainActivity extends AppCompatActivity {
         colors.add(R.color.colorPrimaryDark);
         colors.add(R.color.colorAccent);
         tabBar.initTxtColor(colors);
-    }
+   }
 
+    @Override
+    public void onClick(int index) {
+        Log.i("yuanxueyuan",index+"");
+    }
 }

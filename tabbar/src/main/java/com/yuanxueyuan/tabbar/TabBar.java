@@ -145,6 +145,11 @@ public class TabBar extends LinearLayout implements View.OnClickListener, ViewPa
     private int[] pageLLId = {R.id.ll_page1, R.id.ll_page2, R.id.ll_page3, R.id.ll_page4, R.id.ll_page5};
 
 
+    /**
+     * 代理
+     */
+    private TabBarDelegate tabBarDelegate;
+
     public TabBar(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
@@ -630,6 +635,9 @@ public class TabBar extends LinearLayout implements View.OnClickListener, ViewPa
             if (id == pageLLId[i]) {
                 setSelectTabBar(i + 1);
                 viewPager.setCurrentItem(i);
+                if (tabBarDelegate != null) {
+                    tabBarDelegate.onClick(i);
+                }
             }
         }
     }
@@ -653,5 +661,14 @@ public class TabBar extends LinearLayout implements View.OnClickListener, ViewPa
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+
+
+    public void setDelegate(TabBarDelegate tabBarDelegate){
+        this.tabBarDelegate = tabBarDelegate;
+    }
+
+    public interface TabBarDelegate{
+        void onClick(int index);//点击下方菜单，参数int类型，表示点击的哪个tab，从0开始
     }
 }
