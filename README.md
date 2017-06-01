@@ -31,6 +31,8 @@ android:layout_height="match_parent"/>
   * 4.onInvisibleToUser: \
     每次都调用，当fragment不显示时，
     
+![](https://github.com/YXY001/TabBarDemo/blob/master/device-2017-06-01-150021.png?raw=true)  
+
 
     
     
